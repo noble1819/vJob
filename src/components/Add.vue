@@ -77,7 +77,7 @@
 
                 this.$http.post('http://localhost:8000/jobs', newJob)
                     .then(function(response){
-                        this.$router.push({path: '/', query: {alert: 'Job Added'}});
+                        this.$router.push({path: '/jobs', query: {alert: 'Job Added'}});
                     });
 
                 e.preventDefault();

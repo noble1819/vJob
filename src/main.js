@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 import vueResource from 'vue-resource'
+import VueSessionStorage from 'vue-sessionstorage'
 import Jobs from './components/Jobs'
 import User from './components/User'
 import JobsAdmin from './components/JobsAdmin'
@@ -14,6 +15,7 @@ import JobDetails from './components/JobDetails'
 
 Vue.use(vueResource)
 Vue.use(VueRouter)
+Vue.use(VueSessionStorage)
 
 const router = new VueRouter({
   mode: 'history',
@@ -34,8 +36,13 @@ new Vue({
   router,
   template: `
     <div id="app">
-     
-      <router-view></router-view>
+        <router-view></router-view>
+        <footer class="footer">
+      <div class="container">
+        <span class="text-muted">vJob Powered by Vuejs.</span>
+      </div>
+    </footer>
     </div>
+    
   `
 }).$mount('#app')

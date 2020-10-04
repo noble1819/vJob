@@ -46,7 +46,7 @@
 </template>
 
 <script>
- 
+ import Alert from './Alert'
   export default {
     name: 'jobs',
     data () {
@@ -60,7 +60,11 @@
       fetchjobs(){
         this.$http.get('http://localhost:8000/jobs')
           .then(function(response){
+            if(response.status==200)
             this.jobs = response.body;
+            else{
+                this.alert = 'Sorry we are facing some issues';
+            }
           });
       },
       
@@ -69,8 +73,8 @@
       
       this.fetchjobs();
     },
-    updated: function(){
-      this.fetchjobs();
+    components:{
+        Alert
     }
   }
 </script>

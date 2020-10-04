@@ -50,27 +50,27 @@
 </template>
 
 <script>
- 
+ import Alert from './Alert'
   export default {
     name: 'jobs',
     data () {
       return {
         jobs: [],
         alert:'',
-        filterInput:''
       }
     },
     methods: {
       fetchjobs(){
         this.$http.get('http://localhost:8000/jobs')
           .then(function(response){
-            this.jobs = response.body;
+             this.jobs = response.body;
+       
           });
       },
       deletejob(id){
           this.$http.delete('http://localhost:8000/jobs/'+id)
           .then(function(response){
-            this.$router.push({path: '/', query: {alert: 'job Deleted'}});
+            this.fetchjobs();
           });
       }
       
@@ -79,8 +79,8 @@
       
       this.fetchjobs();
     },
-    updated: function(){
-      this.fetchjobs();
+    components: {
+        Alert
     }
   }
 </script>

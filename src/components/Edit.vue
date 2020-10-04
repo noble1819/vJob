@@ -74,6 +74,7 @@
                 this.alert = 'Please fill in all required fields';
             } else {
                 let updjob = {
+                    id:this.$route.params.id,
                     job_title: this.job.job_title,
                     profile_description: this.job.profile_description,
                     category: this.job.category,
@@ -81,9 +82,9 @@
                     required_skills: this.job.required_skills
                 }
 
-                this.$http.put('http://localhost:8000/jobs'+this.$route.params.id, updjob)
+                this.$http.put('http://localhost:8000/jobs', updjob)
                     .then(function(response){
-                        this.$router.push({path: '/', query: {alert: 'Job Updated'}});
+                        this.$router.push({path: '/jobs', query: {alert: 'Job Updated'}});
                     });
 
                 e.preventDefault();

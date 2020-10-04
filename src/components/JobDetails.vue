@@ -20,28 +20,31 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <router-link to="/">Back</router-link>
-    <h1 class="page-header">{{job.job_title}} 
+    <Alert v-if="alert" v-bind:message="alert" />
+    <router-link to="/job">Back</router-link>
+    <h1 class="page-header">{{job.job_title}}
         <span class="pull-right">
-            <router-link class="btn btn-primary" v-on:click="applyjob(job.id)">Apply</router-link>
+            <button class="btn btn-primary" v-on:click="applyjob(job.id,$session.get('username'))">Apply</button>
             </span>
     </h1>
             <ul class="list-group">
-            <li class="list-group-item"> {{job.profile_description}}</li>
-            <li class="list-group-item">{{job.category}}</li>
-            <li class="list-group-item">{{job.package}}</li>
-            <li class="list-group-item">{{job.required_skills}}</li>
-            <li class="list-group-item">{{job.posted_date}}</li>
+            <li class="list-group-item">Profile Description : {{job.profile_description}}</li>
+            <li class="list-group-item">Category            : {{job.category}}</li>
+            <li class="list-group-item">Package             : {{job.package}}</li>
+            <li class="list-group-item">Required Skills     : {{job.required_skills}}</li>
+            <li class="list-group-item">posted_date         : {{job.posted_date}}</li>
         </ul>
   </div>
 </template>
 
 <script>
+import Alert from './Alert'
 export default {
   name: 'jobdetails',
   data () {
     return {
-      job: ''
+      job: '',
+      alert:''
     }
   },
   methods:{
@@ -49,18 +52,33 @@ export default {
           this.$http.get('http://localhost:8000/jobs/'+id)
           .then(function(response){
             this.job = response.body;
+            this.$session.set('jid', this.job.id);
           });
       },
-      applyjob(id){
-          this.$http.delete('http://localhost:8000/jobs/'+id+"/apply")
+      applyjob(id,name){
+          if(this.id=='' || this.name==''){
+                this.alert = 'We are facing some error';
+            } else {
+              this.alert = 'Awesome';
+                let jobapply = {
+                    job_id: id,
+                    user_name: name
+                }
+          this.$http.post('http://localhost:8000/jobs/'+id+'/apply',jobapply)
           .then(function(response){
-            this.$router.push({path: '/job', query: {alert: 'job Applied'}});
-          });
+                 this.$router.push({path: '/job', query: {alert: 'job Applied'}});
+           });
+          
       }
+      
+    }
   },
   created: function(){
       this.fetchjob(this.$route.params.id);
-  }
+  },
+  components:{
+        Alert
+    }
 }
 </script>
 

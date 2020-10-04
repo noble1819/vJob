@@ -50,8 +50,10 @@
                 this.alert = 'Please fill in all required fields';
             } else {
                 if(this.user.username=="recruiter@screel.in"){
+                  this.$session.set('username', this.user.username)
                     this.$router.push({path: '/jobs', query: {alert: 'Welcome Back admin'}});
                 }else if(this.user.username=="candidate@screel.in"){
+                  this.$session.set('username', this.user.username)
                     this.$router.push({path: '/job', query: {alert: 'Welcome Back Candidate'}});
                 }else{
                     this.alert = 'Invalid User';
