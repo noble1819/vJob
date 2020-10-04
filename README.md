@@ -1,6 +1,6 @@
 # vJob
 
-> Simple customer manager frontend to be used with the [SlimPHP RESTful API](https://github.com/bradtraversy/slimapp)
+> Simple Job Application frontend to be used with the [vJob RESTful API]
 
 ## Installation
 
